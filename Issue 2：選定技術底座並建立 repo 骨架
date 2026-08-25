@@ -1,0 +1,9 @@
+Labels: `setup`　Milestone: `v0.1 規格與環境`
+目的：不要從零手刻 LaTeX class，fork 一個結構乾淨的模板來改。
+工作項目
+[ ] 比較並決定底座：`Hsins/NTU-Thesis-LaTeX-Template`（.cls 架構清楚）或 `sppmg/TW\_Thesis\_Template`（本身就支援多校，等於現成的「新增一間學校」範例）
+[ ] 建立 repo，放入初版 `README.md` 與 `.gitignore`（忽略 `\*.aux \*.log \*.pdf` 等編譯產物）
+[ ] 決定編譯引擎：XeLaTeX 或 LuaLaTeX（中文必用其一，不可用純 pdfLaTeX）並記錄在 README
+[ ] 確認能編出一份 hello-world PDF（先不管格式）
+完成定義：repo 能在 Overleaf 或本機成功編譯出一份空白/範例 PDF；README 說明所選底座與引擎。
+---

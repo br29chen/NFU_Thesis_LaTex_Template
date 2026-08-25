@@ -1,0 +1,8 @@
+Labels: `setup`　Milestone: `v0.1 規格與環境`
+目的：讓每次改動都能穩定產出 PDF，避免 TeX Live 安裝地獄卡住進度。
+工作項目
+[ ] 二選一：Overleaf 綁 GitHub 同步（最省事）或 GitHub Actions 自動編譯
+[ ] 設定完成並驗證：一次 commit 後能取得最新 PDF
+[ ] 在 README 寫下「如何編譯」步驟
+完成定義：任何人 clone/fork 後，照 README 一步就能產出 PDF。
+---

@@ -1,0 +1,185 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+%% bookspine.tex — NFU 工管系書背（獨立編譯）
+
+\documentclass[a4paper,12pt]{article}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\usepackage[a4paper,margin=1cm]{geometry}
+
+%% 中文字型
+\IfFontExistsTF{TW-Kai}{
+  \setCJKmainfont{TW-Kai}[AutoFakeBold=2]
+}{
+  \IfFontExistsTF{AR PL KaitiM Big5}{
+    \setCJKmainfont{AR PL KaitiM Big5}[AutoFakeBold=2]
+  }{
+    \setCJKmainfont{Noto Serif CJK TC}[AutoFakeBold=2]
+  }
+}
+
+%% ------------------ 書背資料設定 ------------------------------
+
+%% 系所：完整名稱
+% 工業管理系工業工程與管理碩士班
+\newcommand{\bsDeptVertical}{%
+  \vbox to \bsTopNamesH{%
+    \hbox to 1.2em{\hfil 工\hfil}\vfil
+    \hbox to 1.2em{\hfil 業\hfil}\vfil
+    \hbox to 1.2em{\hfil 管\hfil}\vfil
+    \hbox to 1.2em{\hfil 理\hfil}\vfil
+    \hbox to 1.2em{\hfil 系\hfil}\vfil
+    \hbox to 1.2em{\hfil 工\hfil}\vfil
+    \hbox to 1.2em{\hfil 業\hfil}\vfil
+    \hbox to 1.2em{\hfil 工\hfil}\vfil
+    \hbox to 1.2em{\hfil 程\hfil}\vfil
+    \hbox to 1.2em{\hfil 與\hfil}\vfil
+    \hbox to 1.2em{\hfil 管\hfil}\vfil
+    \hbox to 1.2em{\hfil 理\hfil}\vfil
+    \hbox to 1.2em{\hfil 碩\hfil}\vfil
+    \hbox to 1.2em{\hfil 士\hfil}\vfil
+    \hbox to 1.2em{\hfil 班\hfil}
+  }%
+}
+
+% 國立虎尾科技大學
+\newcommand{\bsUnivVertical}{%
+  \vbox to \bsTopNamesH{%
+    \hbox to 1.2em{\hfil 國\hfil}\vfil
+    \hbox to 1.2em{\hfil 立\hfil}\vfil
+    \hbox to 1.2em{\hfil 虎\hfil}\vfil
+    \hbox to 1.2em{\hfil 尾\hfil}\vfil
+    \hbox to 1.2em{\hfil 科\hfil}\vfil
+    \hbox to 1.2em{\hfil 技\hfil}\vfil
+    \hbox to 1.2em{\hfil 大\hfil}\vfil
+    \hbox to 1.2em{\hfil 學\hfil}
+  }%
+}
+
+%% 使用者修改資料
+\def\bsYear{116}
+
+\def\bsDegreeV{
+  碩\\
+  士\\
+  論\\
+  文
+}
+
+\def\bsTitleV{
+  中\\
+  文\\
+  題\\
+  目
+}
+
+\def\bsAuthorV{
+  你\\
+  的\\
+  名\\
+  字
+}
+
+%% ------------------ 書背尺寸設定 ------------------------------
+%% A4 上呈現書背示意框
+\newlength{\bsSpineH}
+\setlength{\bsSpineH}{270mm}
+
+\newlength{\bsSpineW}
+\setlength{\bsSpineW}{20mm}
+
+%% 系上附件十三：
+%% 上方校名＋系所 6cm
+\newlength{\bsTopNamesH}
+\setlength{\bsTopNamesH}{6cm}
+
+\newlength{\bsDegreeH}
+\setlength{\bsDegreeH}{3cm}
+
+%% 碩士論文 → 論文題目：1 cm
+\newlength{\bsGapDegreeTitle}
+\setlength{\bsGapDegreeTitle}{1cm}
+
+%% 姓名區：2 cm
+\newlength{\bsAuthorH}
+\setlength{\bsAuthorH}{2cm}
+
+%% 姓名 → 學年度：1 cm
+\newlength{\bsGapAuthorYear}
+\setlength{\bsGapAuthorYear}{1cm}
+
+%% 學年度區：2 cm
+\newlength{\bsYearH}
+\setlength{\bsYearH}{2cm}
+
+%% 書背底端：2 cm
+\newlength{\bsBottomGap}
+\setlength{\bsBottomGap}{2cm}
+
+%% 垂直文字
+\newcommand{\vtext}[1]{%
+  \begin{tabular}[c]{@{}c@{}}
+    #1
+  \end{tabular}
+}
+
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+
+  \setlength{\fboxsep}{0pt}
+  \setlength{\fboxrule}{0.6pt}
+
+  \framebox{%
+    \begin{minipage}[t][\bsSpineH][t]{\bsSpineW}
+
+      \centering
+      \fontsize{12}{12}\selectfont
+      \vspace{1.5cm}
+
+      %% 1. 校名＋系所
+    \begin{tabular}{@{}c@{\hspace{0.25cm}}c@{}}
+        \bsDeptVertical &
+        \bsUnivVertical
+    \end{tabular}
+
+
+      \begin{minipage}[c][\bsDegreeH][c]{\linewidth}
+        \centering
+        \vtext{\bsDegreeV}
+      \end{minipage}
+
+
+      %% 3. 空 1 cm
+      \vspace*{\bsGapDegreeTitle}
+
+      %% 4. 論文題目
+      \vtext{\bsTitleV}\par
+      \vfill
+
+      %% 5. 姓名：2 cm 區域
+      \begin{minipage}[c][\bsAuthorH][c]{\linewidth}
+        \centering
+        \vtext{\bsAuthorV}
+      \end{minipage}
+
+      %% 6. 空 1 cm
+      \vspace*{\bsGapAuthorYear}
+
+      %% 7. 學年度：2 cm 區域
+      \begin{minipage}[c][\bsYearH][c]{\linewidth}
+        \centering
+        \vtext{
+          \bsYear\\
+          學\\
+          年\\
+          度
+        }
+      \end{minipage}
+
+      %% 8. 底部留 2 cm
+      \vspace*{\bsBottomGap}
+    \end{minipage}%
+  }
+\end{center}
+\end{document}

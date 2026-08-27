@@ -1,0 +1,459 @@
+%!TEX encoding = UTF-8 Unicode
+%% nfu-thesis.sty — National Formosa University thesis template
+%% Refactored into a single package-style file, following the compact
+%% organization of NTOU_Thesis-main while preserving the original NFU layout.
+%%
+%% Original NFU template author: ziteh (https://github.com/ziteh)
+%% Original notice retained below.
+%% ----------------------------------------------------------------------------
+%% "THE CHOCOLATE-WARE LICENSE":
+%% Tz-Huan Huang wrote the original file. As long as you retain this notice you
+%% can do whatever you want with this stuff. If we meet some day, and you think
+%% this stuff is worth it, you can buy me a chocolate in return Tz-Huan Huang.
+%% ----------------------------------------------------------------------------
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{nfu-thesis}[2026/08/23 Compact NFU thesis template]
+
+\RequirePackage{xkeyval}
+\RequirePackage{fontspec}
+\RequirePackage{xeCJK}
+\RequirePackage{geometry}
+\RequirePackage{setspace}
+\RequirePackage{titlesec}
+\RequirePackage{indentfirst}
+\RequirePackage{tocloft}
+\RequirePackage[notbib]{tocbibind}
+\RequirePackage{titletoc}
+\RequirePackage{etoolbox}
+\RequirePackage{graphicx}
+\RequirePackage{subfig}
+\RequirePackage{float}
+\RequirePackage{array}
+\RequirePackage{pdfpages}
+\RequirePackage{wallpaper}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage[numbers,sort,square,comma,compress]{natbib}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage{xr}
+\RequirePackage{tikz}
+\RequirePackage{tikz-qtree}
+\RequirePackage{listings}
+\RequirePackage{adjustbox}
+\RequirePackage{multirow}
+\RequirePackage{booktabs}
+\RequirePackage{caption}
+\RequirePackage{rotating}
+\RequirePackage{dcolumn}
+\RequirePackage{pgfplots}
+\RequirePackage{chngcntr}
+\RequirePackage{algorithm}
+\RequirePackage{algpseudocode}
+\RequirePackage{enumitem}
+
+%%  邊界設定
+\geometry{
+  a4paper,
+  top=2.5cm,
+  bottom=2.5cm,
+  left=3cm,
+  right=2cm,
+  footskip=1.5cm
+}
+\pgfplotsset{compat=1.18}
+\newcolumntype{z}{D{.}{.}{3}}
+\captionsetup[table]{labelsep=space}
+\captionsetup[figure]{labelsep=space}
+\defaultfontfeatures{Mapping=tex-text}
+
+%% ----------------------------------------------------------------
+%% Metadata: all user-editable thesis information is centralized in NFUSetup
+%% ----------------------------------------------------------------
+\newcommand{\nfuMainFont}{Times New Roman}
+\newcommand{\nfuCJKFont}{TW-Kai}
+\newcommand{\nfuUniversityEN}{National Formosa University}
+\newcommand{\nfuUniversityZH}{國立虎尾科技大學}
+\newcommand{\nfuCollegeEN}{College of Management}
+\newcommand{\nfuCollegeZH}{管理學院}
+\newcommand{\nfuInstituteEN}{Department of Industrial Management}
+\newcommand{\nfuInstituteZH}{工業管理系工業工程與管理碩士班}
+\newcommand{\nfuFieldEN}{Industrial Engineering and Management}
+\newcommand{\nfuDegreeZH}{碩士}
+\newcommand{\nfuDegreeEN}{Master of Science}
+\newcommand{\nfuClassZH}{論文}
+\newcommand{\nfuClassEN}{Thesis}
+\newcommand{\nfuTitleEN}{English Title}
+\newcommand{\nfuTitleZH}{中文題目}
+\newcommand{\nfuStudentEN}{your name}
+\newcommand{\nfuStudentZH}{你的名字}
+\newcommand{\nfuAdvisorEN}{advisor's name}
+\newcommand{\nfuAdvisorZH}{指導教授姓名}
+\newcommand{\nfuYearEN}{2026}
+\newcommand{\nfuYearZH}{115}
+\newcommand{\nfuMonthEN}{July}
+\newcommand{\nfuMonthZH}{7}
+\newcommand{\nfuWatermarkFile}{watermark_nfu.jpg}
+\newcommand{\nfuApprovalPDF}{口試委員審定書.pdf}
+
+\newcommand{\NFUSetup}[1]{\setkeys{nfu}{#1}}
+\define@key{nfu}{mainfont}{\renewcommand{\nfuMainFont}{#1}}
+\define@key{nfu}{cjkfont}{\renewcommand{\nfuCJKFont}{#1}}
+\define@key{nfu}{universityen}{\renewcommand{\nfuUniversityEN}{#1}}
+\define@key{nfu}{universityzh}{\renewcommand{\nfuUniversityZH}{#1}}
+\define@key{nfu}{collegeen}{\renewcommand{\nfuCollegeEN}{#1}}
+\define@key{nfu}{collegezh}{\renewcommand{\nfuCollegeZH}{#1}}
+\define@key{nfu}{instituteen}{\renewcommand{\nfuInstituteEN}{#1}}
+\define@key{nfu}{institutezh}{\renewcommand{\nfuInstituteZH}{#1}}
+\define@key{nfu}{fielden}{\renewcommand{\nfuFieldEN}{#1}}
+\define@key{nfu}{degreezh}{\renewcommand{\nfuDegreeZH}{#1}}
+\define@key{nfu}{degreeen}{\renewcommand{\nfuDegreeEN}{#1}}
+\define@key{nfu}{classzh}{\renewcommand{\nfuClassZH}{#1}}
+\define@key{nfu}{classen}{\renewcommand{\nfuClassEN}{#1}}
+\define@key{nfu}{titleen}{\renewcommand{\nfuTitleEN}{#1}}
+\define@key{nfu}{titlezh}{\renewcommand{\nfuTitleZH}{#1}}
+\define@key{nfu}{studenten}{\renewcommand{\nfuStudentEN}{#1}}
+\define@key{nfu}{studentzh}{\renewcommand{\nfuStudentZH}{#1}}
+\define@key{nfu}{advisoren}{\renewcommand{\nfuAdvisorEN}{#1}}
+\define@key{nfu}{advisorzh}{\renewcommand{\nfuAdvisorZH}{#1}}
+\define@key{nfu}{yearen}{\renewcommand{\nfuYearEN}{#1}}
+\define@key{nfu}{yearzh}{\renewcommand{\nfuYearZH}{#1}}
+\define@key{nfu}{monthen}{\renewcommand{\nfuMonthEN}{#1}}
+\define@key{nfu}{monthzh}{\renewcommand{\nfuMonthZH}{#1}}
+\define@key{nfu}{watermark}{\renewcommand{\nfuWatermarkFile}{#1}}
+\define@key{nfu}{approvalpdf}{\renewcommand{\nfuApprovalPDF}{#1}}
+
+%% Font fallback keeps the project usable on Overleaf and common local installs.
+\newcommand{\nfuApplyFonts}{%
+  \IfFontExistsTF{\nfuMainFont}{\setmainfont{\nfuMainFont}}{%
+    \IfFontExistsTF{TeX Gyre Termes}{\setmainfont{TeX Gyre Termes}}{%
+      \IfFontExistsTF{Liberation Serif}{\setmainfont{Liberation Serif}}{\setmainfont{Latin Modern Roman}}%
+    }%
+  }%
+  \IfFontExistsTF{\nfuCJKFont}{%
+    \setCJKmainfont{\nfuCJKFont}[AutoFakeBold=2]%
+  }{%
+    \IfFontExistsTF{AR PL KaitiM Big5}{%
+      \setCJKmainfont{AR PL KaitiM Big5}[AutoFakeBold=2]%
+    }{%
+      \setCJKmainfont{Noto Serif CJK TC}[AutoFakeBold=2]%
+    }%
+  }%
+}
+
+\AtBeginDocument{%
+  \nfuApplyFonts
+  \setlength{\parindent}{2em}   %%正文首行縮排
+  \setlength{\parskip}{0pt}
+  %\setstretch{1.05}
+  %\singlespacing        %% 中文單行間距
+  \fontsize{12}{19.2}\selectfont
+  \hypersetup{hidelinks,hypertexnames=false}
+}
+
+%% ----------------------------------------------------------------
+%% Cover and title page
+%% ----------------------------------------------------------------
+\newcommand{\makeNFUCover}{%
+  \begin{titlepage}
+    \thispagestyle{empty}
+    \vspace{1cm}
+    \begin{singlespace}\begin{center}
+      \fontsize{36}{36}\selectfont \nfuUniversityZH\par
+      \vspace{\baselineskip}
+      \fontsize{28}{52}\selectfont \nfuInstituteZH\par
+      %\vspace{1cm}
+      \vspace{\baselineskip}
+      \fontsize{24}{32}\selectfont \nfuDegreeZH\nfuClassZH\par
+      \vspace{4cm} 
+      %\vspace{5\baselineskip}
+      \fontsize{20}{32}\selectfont \nfuTitleZH\par
+      \textbf{\nfuTitleEN}\par
+      %\vspace{4cm}
+      \vspace{7\baselineskip}
+      {\fontsize{18}{27}\selectfont
+      \begin{tabular}{cc}
+        研\enspace 究\enspace 生： & \nfuStudentZH \\
+        指導教授： & \nfuAdvisorZH \\
+      \end{tabular}\par
+      }
+      %\vspace{\fill}
+      \vspace{1cm}
+      {\fontsize{16}{16}\selectfont
+      中\; 華\; 民\; 國\; \nfuYearZH 年\; \nfuMonthZH 月\par
+      }
+    \end{center}\end{singlespace}
+    \vspace{1cm}
+  \end{titlepage}
+}
+
+\newcommand{\makeNFUTitlePage}{%
+  \begin{titlepage}
+    \thispagestyle{empty}
+    \vspace{1cm}
+    \begin{singlespace}\begin{center}
+      \vspace{1cm}
+      \fontsize{20}{32}\selectfont
+      \nfuTitleZH\par
+      \nfuTitleEN\par
+      \vspace{1.5cm}
+      \fontsize{14}{27}\selectfont
+      \begin{tabular}{cccl}
+        研\enspace 究\enspace 生： & \nfuStudentZH & \hspace{4em}Student： & \!\nfuStudentEN \\
+        指導教授： & \nfuAdvisorZH & \hspace{4em}Advisor： & \!\nfuAdvisorEN \\
+      \end{tabular}\\
+      \vspace{3.25cm}
+      \fontsize{14}{20}\selectfont
+      \nfuUniversityZH\par
+      \nfuInstituteZH\par
+      \nfuDegreeZH\nfuClassZH\par
+      \vspace{0.7cm}
+      {\fontsize{12}{21}\selectfont
+        A \nfuClassEN\ Submitted to \nfuInstituteEN\par
+        \nfuCollegeEN\par
+        \nfuUniversityEN\par
+        in Partial Fulfillment of the Requirements\par
+        for the Degree of \nfuDegreeEN\par
+        in\par
+        \nfuFieldEN\par}
+      \vspace{\fill}
+      \fontsize{12}{20}\selectfont
+      \nfuMonthEN, \nfuYearEN\\
+      Huwei, Yunlin, Taiwan, Republic of China\\
+      \vspace{0.4cm}
+      \fontsize{16}{16}\selectfont
+      中\; 華\; 民\; 國\; \nfuYearZH 年\; \nfuMonthZH 月
+    \end{center}\end{singlespace}
+  \end{titlepage}
+}
+
+\newcommand{\makeNFUApprovalPage}{%
+  \IfFileExists{\nfuApprovalPDF}{%
+    \includepdf[pages={1},pagecommand={}]{\nfuApprovalPDF}%
+  }{\PackageWarning{nfu-thesis}{Approval PDF `\nfuApprovalPDF' not found; page skipped}}%
+}
+
+%% ----------------------------------------------------------------
+%% Watermark and page-number transitions
+%% ----------------------------------------------------------------
+\newcommand{\NFUWatermarkOn}{%
+  \IfFileExists{\nfuWatermarkFile}{%
+    \CenterWallPaper{0.8}{\nfuWatermarkFile}%
+    \setlength{\wpXoffset}{0cm}\setlength{\wpYoffset}{0cm}%
+  }{\PackageWarning{nfu-thesis}{Watermark file `\nfuWatermarkFile' not found}}%
+}
+\newcommand{\NFUWatermarkOff}{\ClearWallPaper}
+\newcommand{\NFUFrontMatter}{%
+  \clearpage
+  \hypersetup{pageanchor=true}%
+  \pagenumbering{roman}\setcounter{page}{1}\pagestyle{plain}%
+}
+\newcommand{\NFUMainMatter}{%
+  \clearpage\pagenumbering{arabic}\setcounter{page}{1}\pagestyle{plain}%
+}
+\newcommand{\NFUAppendix}{\appendix}
+
+%% ----------------------------------------------------------------
+%% Front matter environments
+%% ----------------------------------------------------------------
+
+%% ----------中文摘要----------------
+\newcommand{\makeNFUAbstractHeaderZH}{%
+  \begin{center}
+  
+    {\fontsize{14}{14}\selectfont 
+    \nfuTitleZH\\
+    }
+    
+    \vspace{3\baselineskip}
+    
+    {\fontsize{14}{14}\selectfont
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
+        研究生：\nfuStudentZH &
+        指導教授：\nfuAdvisorZH
+      \end{tabular*}\\
+      
+      \vspace{3\baselineskip}
+      \nfuUniversityZH\nfuInstituteZH
+    }
+  \end{center}
+}
+
+%% ----------English Abstract ------------
+\newcommand{\makeNFUAbstractHeaderEN}{%
+  \begin{center}
+  
+    {\fontsize{14}{14}\selectfont 
+    \nfuTitleEN\\
+    }
+    
+    \vspace{3\baselineskip}
+    
+    {\fontsize{14}{14}\selectfont
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
+        Student: \nfuStudentEN &
+        Advisor: \nfuAdvisorEN
+      \end{tabular*}\\
+      
+      \vspace{3\baselineskip}
+      \nfuInstituteEN\\
+      \nfuUniversityEN
+    }
+  \end{center}
+}
+
+%% ----------中文摘要----------------
+\newenvironment{NFUAbstractZH}{%
+  \clearpage\makeNFUAbstractHeaderZH
+  {\fontsize{14}{14}\selectfont
+  \begin{center}
+  摘要
+  \end{center}}
+  \addcontentsline{toc}{chapter}{摘要}
+}
+
+%% ----------English Abstract ------------
+\newenvironment{NFUAbstractEN}{%
+  \clearpage\makeNFUAbstractHeaderEN
+  {\fontsize{14}{14}\selectfont
+  \begin{center}
+  ABSTRACT
+  \end{center}}
+  \addcontentsline{toc}{chapter}{Abstract}
+}
+
+%% ---------- 誌謝 ------------
+\newenvironment{NFUAcknowledge}{%
+  \clearpage
+  \begin{center}
+      {\fontsize{22}{22}\selectfont\mdseries \textbf{誌謝}\\}
+  \end{center}
+  \vspace{\baselineskip}
+  \addcontentsline{toc}{chapter}{誌謝}
+}
+
+%% ---------------- Extended Abstract ----------------
+\newenvironment{NFUExtendedAbstract}{%
+  \clearpage
+
+  % 加入目錄，但不使用 \chapter*，避免受到正文 chapter 格式影響
+  \addcontentsline{toc}{chapter}{Extended Abstract}
+  \begin{center}
+
+    {\fontsize{16}{16}\selectfont\bfseries
+      Extended Abstract\par
+    }
+    \vspace{\baselineskip}
+    
+    {\fontsize{16}{16}\selectfont\bfseries
+      \nfuTitleZH\\
+      \nfuTitleEN\par
+    }
+    \vspace{\baselineskip}
+    
+    {\fontsize{12}{12}\selectfont
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
+        Student: \nfuStudentEN &
+        Advisor: \nfuAdvisorEN
+      \end{tabular*}\par
+    }
+    \vspace{\baselineskip}
+    
+    {\fontsize{12}{12}\selectfont
+      \nfuInstituteEN\par
+      \nfuCollegeEN, \nfuUniversityEN\par
+    }
+    \vspace{\baselineskip}
+
+    {\fontsize{16}{16}\selectfont\bfseries
+      Abstract\par
+    }
+  \end{center}
+
+  % Extended Abstract 內文：12pt
+  \fontsize{12}{19.2}\selectfont
+}{}
+
+
+%% ----------------------------------------------------------------
+%% Chapter / TOC / figure-table formatting (kept close to original NFU class)
+%% ----------------------------------------------------------------
+\setcounter{tocdepth}{2}
+\pagestyle{plain}
+\renewcommand{\cftloftitlefont}{\hfill \fontsize{22}{22}\bfseries}  %圖目錄標題
+\renewcommand{\cftafterloftitle}{\hfill}
+\renewcommand{\cfttoctitlefont}{\hfil \fontsize{22}{22}\bfseries}   %目錄標題
+\renewcommand{\cftaftertoctitle}{\hfill}
+\renewcommand{\cftlottitlefont}{\hfill \fontsize{22}{22}\bfseries}  %表目錄標題
+\renewcommand{\cftafterlottitle}{\hfill}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}  %填滿點線
+
+\newcommand{\nfuNaiveZhNum}[1]{%
+  \ifcase#1 零\or 一\or 二\or 三\or 四\or 五\or 六\or 七\or 八\or 九\else #1\fi}
+
+
+%% ---------------------------------------------------------------
+%% Chapter / Section / Subsection formatting
+%% ---------------------------------------------------------------
+
+% 章標題
+\titleformat{\chapter}
+  {\centering\fontsize{22}{22}\selectfont\bfseries}
+  {第\nfuNaiveZhNum{\value{chapter}}章}
+  {1em}
+  {}
+  [\vspace{19.2pt}]
+
+\titlespacing*{\chapter}
+  {0pt}   % 左側縮排
+  {0pt}   % 章標題前距離
+  {0pt}   % 章標題後距離
+
+
+% 節標題
+\titleformat{\section}
+  {\fontsize{16}{16}\selectfont\bfseries}
+  {\thesection}
+  {1em}
+  {}
+
+\titlespacing*{\section}
+  {0pt}
+  {\baselineskip}
+  {0pt}
+
+
+% 小節標題
+\titleformat{\subsection}
+  {\fontsize{14}{14}\selectfont\bfseries}
+  {\thesubsection}
+  {1em}
+  {}
+
+\titlespacing*{\subsection}
+  {0pt}
+  {0pt}
+  {0pt}
+
+% subsection 出現前固定空一行
+\AddToHook{cmd/subsection/before}{%
+  \par\vspace*{10pt}%
+}
+
+\titlecontents{chapter}[0em]{}{\makebox[4.1em][l]{\thecontentslabel}}{}{\cftdotfill{\cftdotsep}\contentspage}
+
+
+\floatname{algorithm}{演算法}
+\renewcommand{\algorithmicrequire}{\textbf{輸入：}}
+\renewcommand{\algorithmicensure}{\textbf{輸出：}}
+\renewcommand{\contentsname}{目錄}
+\renewcommand{\listfigurename}{圖目錄}
+\renewcommand{\listtablename}{表目錄}
+\renewcommand{\tablename}{表}
+\renewcommand{\figurename}{圖}
+\renewcommand{\bibname}{參考文獻}
+
+\makeatletter
+\patchcmd{\@chapter}{\addtocontents{lot}{\protect\addvspace{10\p@}}}{}{}{}
+\patchcmd{\@chapter}{\addtocontents{lof}{\protect\addvspace{10\p@}}}{}{}{}
+\makeatother

@@ -1,6 +1,6 @@
 # 國立虎尾科技大學學位論文 LaTeX 模板
 
-> **National Formosa University (NFU) Thesis LaTeX Template**  
+> **NFU Thesis LaTeX Template**  
 > 以 XeLaTeX 編譯，提供國立虎尾科技大學碩博士論文撰寫所需的封面、書名頁、摘要、目錄、圖表目錄、參考文獻、附錄、英文論文大綱與書背等基本排版功能。
 
 > [!IMPORTANT]

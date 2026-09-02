@@ -380,12 +380,33 @@
 %% ----------------------------------------------------------------
 \setcounter{tocdepth}{2}
 \pagestyle{plain}
-\renewcommand{\cftloftitlefont}{\hfill \fontsize{22}{22}\bfseries}  %圖目錄標題
-\renewcommand{\cftafterloftitle}{\hfill}
-\renewcommand{\cfttoctitlefont}{\hfil \fontsize{22}{22}\bfseries}   %目錄標題
-\renewcommand{\cftaftertoctitle}{\hfill}
-\renewcommand{\cftlottitlefont}{\hfill \fontsize{22}{22}\bfseries}  %表目錄標題
-\renewcommand{\cftafterlottitle}{\hfill}
+
+% 圖目錄標題
+\renewcommand{\cftloftitlefont}{%
+  \hfill
+  \fontsize{22}{22}\selectfont\bfseries
+}
+\renewcommand{\cftafterloftitle}{%
+  \hfill\mbox{}
+}
+
+% 目錄標題
+\renewcommand{\cfttoctitlefont}{%
+  \hfill
+  \fontsize{22}{22}\selectfont\bfseries
+}
+\renewcommand{\cftaftertoctitle}{%
+  \hfill\mbox{}
+}
+
+% 表目錄標題
+\renewcommand{\cftlottitlefont}{%
+  \hfill
+  \fontsize{22}{22}\selectfont\bfseries
+}
+\renewcommand{\cftafterlottitle}{%
+  \hfill\mbox{}
+}
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}  %填滿點線
 
 \newcommand{\nfuNaiveZhNum}[1]{%
